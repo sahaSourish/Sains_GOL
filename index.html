@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Groceries Support Hub</title>
+<meta name="description" content="Groceries Online customer support scenario hub and refund calculator.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="brand-mark">SG</div><div><h1>Groceries Support Hub</h1><p>Scenario guide & resolution tools</p></div></div>
+  <div class="header-actions"><button class="ghost-btn" id="themeBtn">◐</button><button class="primary-btn" id="addScenarioTop">+ Add scenario</button></div>
+</header>
+
+<main class="app-shell">
+<aside class="sidebar">
+  <div class="sidebar-title">SCENARIO LIBRARY</div>
+  <div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="Search scenarios..."></div>
+  <nav id="categoryNav"></nav>
+  <div class="sidebar-footer"><button class="text-btn" id="resetBtn">Reset sample data</button><span id="scenarioCount"></span></div>
+</aside>
+
+<section class="workspace">
+  <div class="page-head">
+    <div><div class="eyebrow">GROCERIES ONLINE SUPPORT</div><h2 id="pageTitle">Refund</h2><p id="pageDescription"></p></div>
+    <button class="secondary-btn" id="expandAllBtn">Expand all</button>
+  </div>
+
+  <section class="calculator card calculator-top">
+    <div class="calc-head"><div><div class="eyebrow">QUICK TOOL</div><h3>Refund & adjustment calculator</h3></div><button class="icon-btn" id="clearCalc">↺</button></div>
+    <div class="calc-inline">
+      <div class="calc-inline-fields"><div id="calcRows"></div><div class="calc-total-line"><span>Total</span><strong id="calcGrandTotal">£0.00</strong></div><button class="add-row-btn" id="addItem">+ Add item</button></div>
+      <div class="calc-summary compact-summary"><div><span>Refund</span><strong id="refundTotal">£0.00</strong></div><div><span>Voucher</span><strong id="voucherTotal">£0.00</strong></div><div><span>Lines</span><strong id="itemCount">0</strong></div></div>
+      <div class="refund-method inline-method"><label for="refundMethod">Method</label><select id="refundMethod"><option value="card">Original payment card</option><option value="evoucher">eVoucher</option><option value="substitution">Substitution Price Promise eVoucher</option><option value="mixed">Mixed: refund + eVoucher</option></select><label for="refundTime">Refund timeframe</label><select id="refundTime"><option value="auto">3–5 working days</option><option value="custom">Custom / internal timeframe</option></select><input id="customTime" class="hidden" placeholder="e.g. 3–5 working days"><label for="voucherTime">eVoucher timeframe</label><select id="voucherTime"><option value="auto">Use applicable issue timeframe</option><option value="custom">Custom / internal timeframe</option></select><input id="customVoucherTime" class="hidden" placeholder="e.g. within 72 hours"></div>
+      <div class="refund-statement inline-statement" aria-live="polite"><strong>Customer statement</strong><p id="refundStatement">Add an amount and select the resolution method to generate wording.</p><button type="button" class="copy-btn" id="copyRefundStatement">Copy statement</button></div>
+    </div>
+  </section>
+
+  <div class="scenario-toolbar"><div class="scenario-hint">Choose a situation, then select the statement that best matches the customer’s emotion.</div></div>
+  <section class="scenario-panel"><div id="scenarioList"></div><div id="emptyState" class="empty-state hidden"><div class="empty-icon">⌕</div><h3>No situations found</h3><p>Try another search or add a new scenario.</p></div></section>
+</section>
+</main>
+
+<dialog id="scenarioDialog">
+<form method="dialog" id="scenarioForm" class="modal">
+<div class="modal-head"><div><div class="eyebrow">SCENARIO BUILDER</div><h3 id="modalTitle">Add scenario</h3></div><button type="button" class="icon-btn" id="closeModal">×</button></div>
+<label>Category<select id="fCategory"></select></label>
+<label>Situation title<input id="fTitle" required placeholder="e.g. Missing item"></label>
+<label>Customer situation<textarea id="fSituation" rows="3" required placeholder="Describe the customer’s situation briefly."></textarea></label>
+<div class="statement-fields">
+<label>Calm / concerned statement<textarea id="fCalm" rows="3" placeholder="A calm, concerned customer statement..."></textarea></label>
+<label>Frustrated statement<textarea id="fFrustrated" rows="3" placeholder="A statement for a frustrated customer..."></textarea></label>
+<label>Very upset statement<textarea id="fUpset" rows="3" placeholder="A statement for a very upset customer..."></textarea></label>
+<label>Urgent / time-sensitive statement<textarea id="fUrgent" rows="3" placeholder="A statement where the customer needs urgent help..."></textarea></label>
+</div>
+<label>Source link (optional)<input id="fUrl" type="url" placeholder="https://..."></label>
+<div class="modal-actions"><button type="button" class="secondary-btn" id="cancelModal">Cancel</button><button class="primary-btn" type="submit">Save scenario</button></div>
+</form></dialog>
+
+<template id="calcRowTemplate">
+<div class="calc-row">
+<input class="item-name" placeholder="Item">
+<select class="item-type" aria-label="Calculation type"><option value="refund">Refund</option><option value="partial">Price adjustment</option><option value="substitution">Substitution difference</option></select>
+<input class="item-price" type="number" min="0" step="0.01" placeholder="Amount">
+<input class="item-qty" type="number" min="1" step="1" value="1" aria-label="Quantity">
+<input class="item-second hidden" type="number" min="0" step="0.01" placeholder="Delivered price">
+<input class="item-percent hidden" type="number" min="0" max="100" step="1" value="50" placeholder="%">
+<div class="row-total">£0.00</div><button type="button" class="remove-row">×</button>
+</div>
+</template>
+<script src="app.js"></script>
+</body></html>
